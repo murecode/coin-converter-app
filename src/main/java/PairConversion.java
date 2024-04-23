@@ -1,4 +1,4 @@
-public record PairConversionDto(
+public record PairConversion(
         String base_code,
         String target_code,
         double conversion_rate,

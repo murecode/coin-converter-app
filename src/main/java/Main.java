@@ -14,23 +14,24 @@ public class Main {
             """;
 
     System.out.println("Convertir de: ");
-//    System.out.println( base_codes );
     String base_code = input.nextLine();
-    System.out.println("Convertir a: ");
-//    System.out.println( base_codes );
-    String target_code = input.nextLine();
-    System.out.println("ingrese amount: ");
-    double amount = input.nextDouble();
+//    System.out.println("Convertir a: ");
+//    String target_code = input.nextLine();
+//    System.out.println("ingrese amount: ");
+//    double amount = input.nextDouble();
 
-    PairConversionReq solicitar = new PairConversionReq();
-    PairConversionDto respuesta = solicitar.convertPair(base_code, target_code, amount);
+    APIServices apiServices = new APIServices();
 
-    double conver_result = respuesta.conversion_result();
-    double input_amount = Math.floor(amount);
+//    PairConversion respuesta = apiServices.convertPair(base_code, target_code, amount);
+//    double conver_result = respuesta.conversion_result();
+//    String showConversion = String.format(
+//            "%.1f %s => %.1f %s ", amount, base_code, conver_result, target_code  );
+//    System.out.println(showConversion);
 
-    String showConversion = String.format(
-            "%.2f | %s | %s | %.2f ", input_amount, base_code, target_code, conver_result );
-    System.out.println(showConversion);
+    ConversionRates rates = apiServices.conversionRates(base_code);
+
+    System.out.println( rates );
+
 
 
   }
