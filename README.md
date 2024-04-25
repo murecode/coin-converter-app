@@ -1,5 +1,5 @@
 # Convertidor de Monedas
-
+![insignia](C:\Users\Usuario\Downloads\Badge-Conversor.png)
 Este es un simple convertidor de monedas desarrollado en Java como parte de un desafío de Alura y Oracle One. Esta aplicación permite a los usuarios convertir entre diferentes monedas utilizando tasas de cambio en tiempo real obtenidas de un servicio en línea.
 
 ## Características
