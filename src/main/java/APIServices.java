@@ -8,68 +8,74 @@ import com.google.gson.Gson;
 
 class APIServices {
 
-    String apikey = "1af1a90762ad12c51751ec9a";
-    String url_service = "https://v6.exchangerate-api.com/v6/";
+  String apikey = "1af1a90762ad12c51751ec9a";
+  String url_service = "https://v6.exchangerate-api.com/v6/";
 
 
-    // Solicitar rangos de conversion
-    ConversionRates conversionRates(String base_code) {
+  // Solicitar rangos de conversion
+  ConversionRates conversionRates(String base_code) {
 
-      String url_req = url_service + apikey + "/latest/" + base_code;
+    String url_req = url_service + apikey + "/latest/" + base_code;
 
-      HttpResponse<String> response = null;
+    HttpResponse<String> response = null;
 
-      try {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url_req))
-                .build();
-        response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
+    try {
+      HttpClient client = HttpClient.newHttpClient();
+      HttpRequest request = HttpRequest.newBuilder()
+              .uri(URI.create(url_req))
+              .build();
+      response = client
+              .send(request, HttpResponse.BodyHandlers.ofString());
 
-        // System.out.println(response.body()); OK
+      // System.out.println(response.body()); OK
 
-      } catch (IOException | InterruptedException e) {
-        System.out.println("Ups! algo salio mal" + e);
-      }
-
-      // Conversion de JSON a Objeto Java
-      Gson gson = new Gson();
-      ConversionRates rates = gson.fromJson(response.body(), ConversionRates.class);
-
-      return rates;
-
+    } catch (IOException | InterruptedException e) {
+      System.out.println("Ups! algo salio mal" + e);
     }
 
+    // Conversion de JSON a Objeto Java
+    Gson gson = new Gson();
+    ConversionRates rates = gson.fromJson(response.body(), ConversionRates.class);
 
-    // Solicitud conversion de pares
-    PairConversion convertPair(String base_code, String target_code, double amount) throws IOException, InterruptedException {
+    return rates;
 
-      String url_req = url_service + apikey + "/pair/" + base_code + "/" + target_code + "/" + amount;
+  }
 
-      HttpResponse<String> response = null;
 
-      try {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url_req))
-                .build();
-        response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
+  // Solicitud conversion de pares
+  PairConversion convertPair(String base_code, String target_code, double amount) throws IOException, InterruptedException {
 
-        // System.out.println(response.body()); OK
+    String url_req = url_service + apikey + "/pair/" + base_code + "/" + target_code + "/" + amount;
 
-      } catch (IOException | InterruptedException e) {
-        System.out.println("Ups! algo salio mal" + e);
-      }
+    HttpResponse<String> response = null;
 
-      // Conversion de JSON a Objeto Java
-      Gson gson = new Gson();
-      PairConversion conversion = gson.fromJson(response.body(), PairConversion.class);
+    try {
+      HttpClient client = HttpClient.newHttpClient();
+      HttpRequest request = HttpRequest.newBuilder()
+              .uri(URI.create(url_req))
+              .build();
+      response = client
+              .send(request, HttpResponse.BodyHandlers.ofString());
 
-      return conversion;
+      // System.out.println(response.body()); OK
+
+    } catch (IOException | InterruptedException e) {
+      System.out.println("Ups! algo salio mal" + e);
     }
 
+    // Conversion de JSON a Objeto Java
+    Gson gson = new Gson();
+    PairConversion conversion = gson.fromJson(response.body(), PairConversion.class);
 
+    return conversion;
+  }
+
+  public void showConversion(PairConversion res, double amount) {
+    String formatConversion = String.format(
+            "🟢 %.1f %s ==> %.1f %s", amount, res.base_code(), res.conversion_result(), res.target_code());
+    System.out.println(formatConversion);
+  }
+
+  // TODO: Centralizar la logica de conversion (Gson) de las respuesta ya que se repiten
 
 }

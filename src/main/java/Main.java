@@ -4,35 +4,87 @@ import java.util.Scanner;
 public class Main {
   public static void main(String[] args) throws IOException, InterruptedException {
 
-    Scanner input = new Scanner(System.in);
-
-    String conversion_options = """
-            1. Dolar
-            2. Peso Argentino
-            3. Peso Colombiano
-            9. Peso Mexicano
-            """;
-
-    System.out.println("Convertir de: ");
-    String base_code = input.nextLine();
-//    System.out.println("Convertir a: ");
-//    String target_code = input.nextLine();
-//    System.out.println("ingrese amount: ");
-//    double amount = input.nextDouble();
-
     APIServices apiServices = new APIServices();
 
-//    PairConversion respuesta = apiServices.convertPair(base_code, target_code, amount);
-//    double conver_result = respuesta.conversion_result();
-//    String showConversion = String.format(
-//            "%.1f %s => %.1f %s ", amount, base_code, conver_result, target_code  );
-//    System.out.println(showConversion);
+    String conversion_codes = """
+            ================================
+            💱 ¿Qué conversion deseas realizar?
+            1. USD --> COP
+            2. COP --> USD
+            3. BRL --> USD
+            4. USD --> BRL
+            5. COP --> BRL
+            6. Salir
+            ================================
+            """;
 
-    ConversionRates rates = apiServices.conversionRates(base_code);
+    Scanner input = new Scanner(System.in);
 
-    System.out.println( rates );
+    while (true) {
 
+      System.out.println(conversion_codes + "");
+      int selected = input.nextInt();
+
+      // Se verifica si el usuario desea salir
+      if (selected == 6) {
+        System.out.println("Gracias. att: Adalberto");
+        break; // Salir del bucle while
+      }
+
+      if ( selected == 1 ) {
+
+        System.out.println("💰 Cantidad que desea convertir: ");
+        double amount = input.nextDouble();
+
+        PairConversion respuesta = apiServices.convertPair("USD", "COP", amount);
+        apiServices.showConversion(respuesta, amount);
+
+      } else if ( selected == 2 ) {
+
+        System.out.println("💰 Cantidad que desea convertir: ");
+        double amount = input.nextDouble();
+
+        PairConversion respuesta = apiServices.convertPair("COP", "USD", amount);
+        apiServices.showConversion(respuesta, amount);
+
+      } else if ( selected ==  3) {
+
+        System.out.println("💰 Cantidad que desea convertir: ");
+        double amount = input.nextDouble();
+
+        PairConversion respuesta = apiServices.convertPair("BRL", "USD", amount);
+        apiServices.showConversion(respuesta, amount);
+
+      } else if ( selected == 4 ) {
+
+        System.out.println("💰 Cantidad que desea convertir: ");
+        double amount = input.nextDouble();
+
+        PairConversion respuesta = apiServices.convertPair("USD", "BRL", amount);
+        apiServices.showConversion(respuesta, amount);
+
+      } else if ( selected == 5 ) {
+
+        System.out.println("💰 Cantidad que desea convertir: ");
+        double amount = input.nextDouble();
+
+        PairConversion respuesta = apiServices.convertPair("COP", "BRL", amount);
+        apiServices.showConversion(respuesta, amount);
+
+      } else {
+        if (selected > 6) {
+          System.out.println("🔴 Opción no soportada");
+        }
+      }
+
+
+    }
+
+
+//    ConversionRates rates = apiServices.conversionRates(base_code);
+//    System.out.println( rates );
 
 
   }
+
 }
