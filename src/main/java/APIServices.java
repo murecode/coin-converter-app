@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 
 class APIServices {
 
-  String apikey = "1af1a90762ad12c51751ec9a";
+  String apikey = ""; // tu apikey 
   String url_service = "https://v6.exchangerate-api.com/v6/";
 
 
